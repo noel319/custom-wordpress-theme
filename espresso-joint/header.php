@@ -11,33 +11,34 @@
 <?php wp_body_open(); ?>
 
 <nav class="navbar" id="navbar">
-    <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
-        <!-- Logo -->
-        <div class="logo">
+    <div class="navbar-container">
+        <!-- Navigation Menu - LEFT SIDE -->
+        <div class="nav-menu-wrapper">
+            <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <?php
+            wp_nav_menu(array(
+                'theme_location' => 'primary',
+                'menu_class' => 'nav-menu',
+                'container' => false,
+                'fallback_cb' => 'espresso_joint_default_menu',
+            ));
+            ?>
+        </div>
+        
+        <!-- Logo - RIGHT SIDE -->
+        <div class="logo-wrapper">
             <?php if (has_custom_logo()) : ?>
                 <?php the_custom_logo(); ?>
             <?php else : ?>
-                <div class="logo-icon">EJ</div>
-                <span class="logo-text">
-                    <?php bloginfo('name'); ?>
-                </span>
+                <a href="<?php echo esc_url(home_url('/')); ?>" class="logo">
+                    <div class="logo-icon">EJ</div>
+                    <span class="logo-text">ESPRESSO JOINT</span>
+                </a>
             <?php endif; ?>
         </div>
-        
-        <!-- Mobile Menu Toggle -->
-        <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
-            <i class="fas fa-bars"></i>
-        </button>
-        
-        <!-- Navigation Menu -->
-        <?php
-        wp_nav_menu(array(
-            'theme_location' => 'primary',
-            'menu_class' => 'nav-menu',
-            'container' => false,
-            'fallback_cb' => 'espresso_joint_default_menu',
-        ));
-        ?>
     </div>
 </nav>
 
