@@ -31,6 +31,7 @@
                 ?>
                 
                 <form method="post" action="">
+                    <?php wp_nonce_field('espresso_joint_contact_form', 'contact_nonce'); ?>
                     <div class="form-group">
                         <input 
                             type="text" 
@@ -118,15 +119,15 @@
                     <div class="hours-list">
                         <div class="hours-item">
                             <span><?php _e('Monday - Friday', 'espresso-joint'); ?></span>
-                            <span><?php _e('7:00 AM - 8:00 PM', 'espresso-joint'); ?></span>
+                            <span><?php echo esc_html(get_theme_mod('hours_monday_friday', '7:00 AM - 8:00 PM')); ?></span>
                         </div>
                         <div class="hours-item">
                             <span><?php _e('Saturday', 'espresso-joint'); ?></span>
-                            <span><?php _e('8:00 AM - 8:00 PM', 'espresso-joint'); ?></span>
+                            <span><?php echo esc_html(get_theme_mod('hours_saturday', '8:00 AM - 8:00 PM')); ?></span>
                         </div>
                         <div class="hours-item">
                             <span><?php _e('Sunday', 'espresso-joint'); ?></span>
-                            <span><?php _e('8:00 AM - 6:00 PM', 'espresso-joint'); ?></span>
+                            <span><?php echo esc_html(get_theme_mod('hours_sunday', '8:00 AM - 6:00 PM')); ?></span>
                         </div>
                     </div>
                 </div>

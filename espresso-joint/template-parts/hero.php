@@ -2,10 +2,18 @@
 /**
  * Hero Section Template Part
  */
+
+// Check if this section should be replaced by Elementor
+if (is_active_sidebar('hero-section')) {
+    echo '<section id="hero" class="hero-widget-area">';
+    dynamic_sidebar('hero-section');
+    echo '</section>';
+    return;
+}
 ?>
 
-<section class="hero">
-    <div class="container">
+<section id="hero" class="hero">
+    <div class="hero-content">
         <h1 class="font-display">
             Artisanal 
             <span class="styled-word" data-text="coffee">coffee</span> 
