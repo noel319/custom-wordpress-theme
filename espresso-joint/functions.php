@@ -224,4 +224,112 @@ function espresso_joint_customize_register($wp_customize) {
     ));
     
     $wp_customize->add_setting('contact_phone', array(
-        'default' => '(
+        'default' => '(555) 123-4567',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    
+    $wp_customize->add_control('contact_phone', array(
+        'label' => __('Phone Number', 'espresso-joint'),
+        'section' => 'contact_info',
+        'type' => 'text',
+    ));
+    
+    $wp_customize->add_setting('contact_email', array(
+        'default' => 'hello@espressojoint.com',
+        'sanitize_callback' => 'sanitize_email',
+    ));
+    
+    $wp_customize->add_control('contact_email', array(
+        'label' => __('Email Address', 'espresso-joint'),
+        'section' => 'contact_info',
+        'type' => 'email',
+    ));
+}
+add_action('customize_register', 'espresso_joint_customize_register');
+
+// Helper function to get menu categories
+function espresso_joint_get_menu_categories() {
+    $categories = array(
+        array(
+            'name' => 'Coffee',
+            'icon' => 'fas fa-coffee',
+            'description' => 'Freshly brewed & specialty drinks'
+        ),
+        array(
+            'name' => 'Cold Press Juice',
+            'icon' => 'fas fa-glass-whiskey',
+            'description' => 'Fresh, cold-pressed juices'
+        ),
+        array(
+            'name' => 'Smoothie',
+            'icon' => 'fas fa-apple-alt',
+            'description' => 'Creamy & refreshing blends'
+        ),
+        array(
+            'name' => 'Acai',
+            'icon' => 'fas fa-leaf',
+            'description' => 'Nutrient-rich bowls'
+        ),
+        array(
+            'name' => 'Salads',
+            'icon' => 'fas fa-apple-alt',
+            'description' => 'Fresh & healthy options'
+        ),
+        array(
+            'name' => 'Healthy Bowls',
+            'icon' => 'fas fa-bowl-food',
+            'description' => 'Wholesome & satisfying'
+        ),
+        array(
+            'name' => 'Paninis',
+            'icon' => 'fas fa-hamburger',
+            'description' => 'Grilled to perfection'
+        ),
+        array(
+            'name' => 'Breakfast Sandwiches',
+            'icon' => 'fas fa-bread-slice',
+            'description' => 'Morning favorites all day'
+        ),
+    );
+    
+    return $categories;
+}
+
+// Contact form handler
+function espresso_joint_handle_contact_form() {
+    if (isset($_POST['contact_form_submit'])) {
+        $name = sanitize_text_field($_POST['contact_name']);
+        $email = sanitize_email($_POST['contact_email']);
+        $message = sanitize_textarea_field($_POST['contact_message']);
+        
+        // Basic validation
+        if (empty($name) || empty($email) || empty($message)) {
+            wp_redirect(add_query_arg('contact', 'error', wp_get_referer()));
+            exit;
+        }
+        
+        // Send email
+        $to = get_option('admin_email');
+        $subject = 'New Contact Form Submission from ' . $name;
+        $body = "Name: $name\nEmail: $email\n\nMessage:\n$message";
+        $headers = array('Content-Type: text/plain; charset=UTF-8');
+        
+        if (wp_mail($to, $subject, $body, $headers)) {
+            wp_redirect(add_query_arg('contact', 'success', wp_get_referer()));
+        } else {
+            wp_redirect(add_query_arg('contact', 'error', wp_get_referer()));
+        }
+        exit;
+    }
+}
+add_action('wp_loaded', 'espresso_joint_handle_contact_form');
+
+// Add custom body classes
+function espresso_joint_body_classes($classes) {
+    if (is_front_page()) {
+        $classes[] = 'home-page';
+    }
+    return $classes;
+}
+add_filter('body_class', 'espresso_joint_body_classes');
+?>
