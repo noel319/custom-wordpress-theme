@@ -12,7 +12,19 @@
 
 <nav class="navbar" id="navbar">
     <div class="navbar-container">
-        <!-- Navigation Menu - LEFT SIDE -->
+        <!-- Logo - LEFT SIDE -->
+        <div class="logo-wrapper">
+            <?php if (has_custom_logo()) : ?>
+                <?php the_custom_logo(); ?>
+            <?php else : ?>
+                <a href="<?php echo esc_url(home_url('/')); ?>" class="logo">
+                    <div class="logo-icon">EJ</div>
+                    <span class="logo-text">ESPRESSO JOINT</span>
+                </a>
+            <?php endif; ?>
+        </div>
+        
+        <!-- Navigation Menu - RIGHT SIDE -->
         <div class="nav-menu-wrapper">
             <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
                 <i class="fas fa-bars"></i>
@@ -26,18 +38,6 @@
                 'fallback_cb' => 'espresso_joint_default_menu',
             ));
             ?>
-        </div>
-        
-        <!-- Logo - RIGHT SIDE -->
-        <div class="logo-wrapper">
-            <?php if (has_custom_logo()) : ?>
-                <?php the_custom_logo(); ?>
-            <?php else : ?>
-                <a href="<?php echo esc_url(home_url('/')); ?>" class="logo">
-                    <div class="logo-icon">EJ</div>
-                    <span class="logo-text">ESPRESSO JOINT</span>
-                </a>
-            <?php endif; ?>
         </div>
     </div>
 </nav>
